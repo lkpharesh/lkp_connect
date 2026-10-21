@@ -147,7 +147,7 @@ import T5T6DebitAgeing from "../../pages/RMS/T5T6DebitAgeing";
 
 import ClientPosition from "../../pages/Reports/ClientPosition";
 import MTFYield from "../../pages/MTF Funding Yield";
-const drawerWidth = 260;
+const drawerWidth = 262;
 
 // Utility functions for Drawer
 const openedMixin = (theme: Theme, drawerWidth: any): CSSObject => ({
