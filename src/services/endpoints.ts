@@ -404,6 +404,7 @@ export const endpoints = {
   SendAHT5AgeingMail: "api/RMS/SendAHT5AgeingMail",
   SendRHT5AgeingMail: "api/RMS/SendRHT5AgeingMail",
   SendAPT5AgeingMail: "api/RMS/SendAPT5AgeingMail",
+  DownloadT5T6ODINFile: "api/RMS/DownloadT5T6ODINFile",
 };
 
 console.log("EndPOintLenghts", Object.keys(endpoints).length);

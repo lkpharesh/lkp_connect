@@ -217,6 +217,57 @@ const T5T6DebitAgeing = ({ activeSubItem }: any) => {
     formik.setFieldValue("excelFile", file);
   };
 
+  const downloadOptions = [
+    { label: "ONLYBLOCK", optionType: "ONLYBLOCK" },
+    { label: "BUYBLOCK", optionType: "BUYBLOCK" },
+    { label: "WEBRETAIL", optionType: "WEBRETAIL" },
+    { label: "T6MTF/BuyBlock Remove", optionType: "T6MTF" },
+    { label: "T6MTF/BuyBlock Assign", optionType: "T6MTFBLOCK" },
+    { label: "T6MTF/BuyBlock Remove Test", optionType: "T6MTFTest" },
+  ];
+
+  const handleDownloadFile = async (optionType: string) => {
+    dispatch(showLoader("Downloading file..."));
+
+    try {
+      const response = await apiServices.DownloadT5T6ODINFile({
+        user_id: user_id,
+        optionType: optionType,
+      });
+
+      if (response?.status !== 200 || !response?.data) {
+        ShowToast("error", "Failed to download file");
+        return;
+      }
+
+      const blob =
+        response.data instanceof Blob
+          ? response.data
+          : new Blob([response.data], { type: "text/plain" });
+
+      let fileName = `${optionType}.txt`;
+      const disposition = response?.headers?.["content-disposition"];
+      if (disposition) {
+        const match = /filename\*?=(?:UTF-8'')?"?([^";]+)"?/i.exec(disposition);
+        if (match?.[1]) fileName = decodeURIComponent(match[1]);
+      }
+
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("File download error:", error);
+      ShowToast("error", "Something went wrong while downloading the file");
+    } finally {
+      dispatch(hideLoader());
+    }
+  };
+
   const renderUploadBox = (fileValue: File | null) => (
     <div>
       <div
@@ -308,7 +359,7 @@ const T5T6DebitAgeing = ({ activeSubItem }: any) => {
       </div>
 
       {formik.errors.excelFile && formik.touched.excelFile && (
-        <div className="text-danger mt-1" style={{ fontSize: "0.85rem" }}>
+        <div className="text-danger mt-1" style={{ fontSize: "11px" }}>
           {formik.errors.excelFile}
         </div>
       )}
@@ -429,7 +480,7 @@ const T5T6DebitAgeing = ({ activeSubItem }: any) => {
                 style={{
                   display: "flex",
                   gap: "20px",
-                  marginBottom: "20px",
+                  marginBottom: "7px",
                   flexWrap: "wrap",
                 }}
               >
@@ -515,6 +566,63 @@ const T5T6DebitAgeing = ({ activeSubItem }: any) => {
                   </div>
                 </div>
               )}
+              <div
+                style={{
+                  marginTop: "10px",
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: 8,
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: "12px",
+                    fontWeight: 600,
+                    color: "#344054",
+                    marginTop: "5px",
+                    // marginBottom: "6px",
+                    // border: "1px solid black",
+                  }}
+                >
+                  File Download :
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "8px",
+                  }}
+                >
+                  {downloadOptions.map((item) => (
+                    <Button
+                      key={item.optionType}
+                      type="button"
+                      variant="outlined"
+                      disabled={!isUploadSuccessful}
+                      onClick={() => handleDownloadFile(item.optionType)}
+                      sx={{
+                        fontSize: "10px",
+                        height: "30px",
+                        color: "#11395C",
+                        borderColor: "#11395C",
+                        textTransform: "none",
+                        padding: "6px 14px",
+                        "&:hover": {
+                          borderColor: "#0d2d49",
+                          backgroundColor: "rgba(17, 57, 92, 0.06)",
+                        },
+                        "&.Mui-disabled": {
+                          color: "#9e9e9e",
+                          borderColor: "#bdbdbd",
+                          cursor: "not-allowed",
+                        },
+                      }}
+                    >
+                      {item.label}
+                    </Button>
+                  ))}
+                </div>
+              </div>
             </form>
           </CardBody>
         </Card>

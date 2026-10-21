@@ -1670,4 +1670,9 @@ export const apiServices = {
   SendAPT5AgeingMail: async (payload: any) => {
     return await apiService("POST", endpoints.SendAPT5AgeingMail, payload);
   },
+  DownloadT5T6ODINFile: async (payload: any) => {
+    return await apiService("POST", endpoints.DownloadT5T6ODINFile, payload, {
+      responseType: "blob",
+    });
+  },
 };
