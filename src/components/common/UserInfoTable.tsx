@@ -100,6 +100,7 @@ interface SelectedWidgetProps {
   tabValue?: any;
   editRowAccess?: boolean;
   setRows?: any;
+  handleClientCountClick?: (row: any) => void;
 }
 
 const DataTable = ({
@@ -161,6 +162,7 @@ const DataTable = ({
   tabValue,
   setRows,
   editRowAccess,
+  handleClientCountClick,
 }: SelectedWidgetProps) => {
   const [tradeData, setTradeData] = useState<Trade[]>([]);
   const [totalRows, setTotalRows] = useState<number>(0); // Total rows for pagination
@@ -3075,6 +3077,40 @@ const DataTable = ({
       return TableColumns.SLBMPositionResponseColumns.map((column) => ({
         ...column,
       }));
+    } else if (activeSubItem === "SLBM Stopwatch") {
+      return TableColumns.SlbmClientColumns.map((column) => {
+        if (column.field === "clientCount") {
+          return {
+            ...column,
+            renderCell: (params: any) => {
+              // Otherwise, show the download button
+              return (
+                <>
+                  <Tooltip title="Click to view details" arrow placement="top">
+                    <button
+                      onClick={() => {
+                        handleClientCountClick?.(params.row); // trigger download
+                      }}
+                      style={{
+                        color: "#11395C",
+                        textDecoration: "underline",
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {params.row.clientCount}
+                    </button>
+                  </Tooltip>
+                </>
+              );
+            },
+          };
+        }
+
+        // Return unchanged column if not the 'status' or 'document' field
+        return column;
+      });
     } else {
       return [];
     }
@@ -3367,7 +3403,7 @@ const DataTable = ({
             },
             "& .MuiDataGrid-cell": {
               fontFamily: '"Public Sans", sans-serif',
-              fontSize: "12px",
+              fontSize: "11px",
               // alignItems: "center",
               alignContent: customCss ? "center" : "",
               color: "#000",

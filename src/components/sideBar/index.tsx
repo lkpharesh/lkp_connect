@@ -147,7 +147,8 @@ import T5T6DebitAgeing from "../../pages/RMS/T5T6DebitAgeing";
 
 import ClientPosition from "../../pages/Reports/ClientPosition";
 import MTFYield from "../../pages/MTF Funding Yield";
-const drawerWidth = 262;
+const drawerWidth = 260;
+import SLBMStopwatch from "../../pages/Reports/SLBMStopwatch";
 
 // Utility functions for Drawer
 const openedMixin = (theme: Theme, drawerWidth: any): CSSObject => ({
@@ -764,6 +765,7 @@ const SideBar = () => {
       <SLBMClientResponse activeSubItem={activeSubItem} />
     ),
     "SLBM Client Position": <ClientPosition activeSubItem={activeSubItem} />,
+    "SLBM Stopwatch": <SLBMStopwatch activeSubItem={activeSubItem} />,
   };
 
   // const referalSubItems: Record<string, JSX.Element> = {

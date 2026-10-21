@@ -202,7 +202,6 @@ const MTFShortfallUpload = ({ activeSubItem }: any) => {
     await callApi(apiServices.SendRMMTFShortfallMail, "RM MTF Email");
     await callApi(apiServices.SendRHMTFShortfallMail, "RH MTF Email");
     await callApi(apiServices.SendAPMTFShortfallMail, "AP MTF Email");
-    //new apis'
     await callApi(apiServices.SendTLMTFShortfallMail, "TL MTF Email");
     await callApi(apiServices.SendBMMTFShortfallMail, "BM MTF Email");
     await callApi(apiServices.SendAHMTFShortfallMail, "AH MTF Email");

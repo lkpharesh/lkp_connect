@@ -21,6 +21,7 @@ import {
   stopLossTrilogyColumns,
   stopLossSPIPColumns,
   MTFStockAgeingSaleColumns,
+  SlbmClientDetailsColumns,
 } from "../../../helper/tableColumns.tsx";
 import { Stack, TextField } from "@mui/material";
 // import { useTheme } from "@mui/material/styles";
@@ -147,6 +148,9 @@ const NudgeTable = ({
 
       case "More details about segment":
         return getBrokerageKycDetails(handleDownload ?? (() => {}));
+
+      case "SLBM Client Detail Report":
+        return SlbmClientDetailsColumns;
 
       case "Client List":
         if (selectedTab === "SPIP") {

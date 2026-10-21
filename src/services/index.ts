@@ -1640,4 +1640,41 @@ export const apiServices = {
   GetMTFYieldReport: async (payload: any) => {
     return await apiService("POST", endpoints.GetMTFYieldReport, payload);
   },
+  GetSLBMDDL: async (payload: any) => {
+    return await apiService("GET", endpoints.GetSLBMDDL, payload);
+  },
+
+  GetNSESLBMScripSummary: async (payload: any) => {
+    return await apiService("POST", endpoints.GetNSESLBMScripSummary, payload);
+  },
+  GetNSESLBMClientDetails: async (payload: any) => {
+    return await apiService("POST", endpoints.GetNSESLBMClientDetails, payload);
+  },
+
+  SendDealerT5AgeingMail: async (payload: any) => {
+    return await apiService("POST", endpoints.SendDealerT5AgeingMail, payload);
+  },
+  SendRMT5AgeingMail: async (payload: any) => {
+    return await apiService("POST", endpoints.SendRMT5AgeingMail, payload);
+  },
+  SendTLT5AgeingMail: async (payload: any) => {
+    return await apiService("POST", endpoints.SendTLT5AgeingMail, payload);
+  },
+  SendBMT5AgeingMail: async (payload: any) => {
+    return await apiService("POST", endpoints.SendBMT5AgeingMail, payload);
+  },
+  SendAHT5AgeingMail: async (payload: any) => {
+    return await apiService("POST", endpoints.SendAHT5AgeingMail, payload);
+  },
+  SendRHT5AgeingMail: async (payload: any) => {
+    return await apiService("POST", endpoints.SendRHT5AgeingMail, payload);
+  },
+  SendAPT5AgeingMail: async (payload: any) => {
+    return await apiService("POST", endpoints.SendAPT5AgeingMail, payload);
+  },
+  DownloadT5T6ODINFile: async (payload: any) => {
+    return await apiService("POST", endpoints.DownloadT5T6ODINFile, payload, {
+      responseType: "blob",
+    });
+  },
 };
