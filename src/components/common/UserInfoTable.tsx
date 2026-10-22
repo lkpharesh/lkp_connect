@@ -3077,7 +3077,7 @@ const DataTable = ({
       return TableColumns.SLBMPositionResponseColumns.map((column) => ({
         ...column,
       }));
-    } else if (activeSubItem === "SLBM Stopwatch") {
+    } else if (activeSubItem === "SLBM Stockwatch") {
       return TableColumns.SlbmClientColumns.map((column) => {
         if (column.field === "clientCount") {
           return {

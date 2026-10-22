@@ -598,7 +598,7 @@ const T5T6DebitAgeing = ({ activeSubItem }: any) => {
                       key={item.optionType}
                       type="button"
                       variant="outlined"
-                      disabled={!isUploadSuccessful}
+                      // disabled={!isUploadSuccessful}
                       onClick={() => handleDownloadFile(item.optionType)}
                       sx={{
                         fontSize: "10px",
