@@ -765,7 +765,7 @@ const SideBar = () => {
       <SLBMClientResponse activeSubItem={activeSubItem} />
     ),
     "SLBM Client Position": <ClientPosition activeSubItem={activeSubItem} />,
-    "SLBM Stopwatch": <SLBMStopwatch activeSubItem={activeSubItem} />,
+    "SLBM Stockwatch": <SLBMStopwatch activeSubItem={activeSubItem} />,
   };
 
   // const referalSubItems: Record<string, JSX.Element> = {
