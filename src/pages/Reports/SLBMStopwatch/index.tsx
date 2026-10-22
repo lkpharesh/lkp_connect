@@ -40,6 +40,7 @@ interface SLBMSummaryRow {
   openPositions: number;
   annualisedYield: number;
   daysToReverseLeg: number;
+  ddlMonth: number;
 }
 
 interface SLBMClientRow {
@@ -83,6 +84,10 @@ const SLBMStopwatch = ({ activeSubItem }: SLBMStopwatchProps) => {
   const [isNudgeTableOpen, setIsNudgeTableOpen] = useState(false);
   const [summaryData, setSummaryData] = useState<SLBMSummaryRow[]>([]);
   const [clientData, setClientData] = useState<SLBMClientRow[]>([]);
+  const [selectedSlbmRow, setSelectedSlbmRow] = useState<SLBMSummaryRow | null>(
+    null,
+  );
+
   const dispatch = useDispatch<AppDispatch>();
   const formik = useFormik({
     initialValues: {
@@ -190,13 +195,14 @@ const SLBMStopwatch = ({ activeSubItem }: SLBMStopwatchProps) => {
   }, []);
 
   const handleClientCountClick = async (row: SLBMSummaryRow) => {
-    console.log("apiResponse", row);
     setClientData([]);
+    setSelectedSlbmRow(row);
 
     try {
       dispatch(showLoader("Please wait, we are fetching client details..."));
+
       const response = await apiServices.GetNSESLBMClientDetails({
-        ddlMonth: formik.values.ddlMonth,
+        ddlMonth: row.ddlMonth,
         symbol: row.scrip,
         filter: formik.values.filter,
       });
@@ -206,8 +212,6 @@ const SLBMStopwatch = ({ activeSubItem }: SLBMStopwatchProps) => {
         response?.data?.isSuccess &&
         Array.isArray(response?.data?.data)
       ) {
-        dispatch(hideLoader());
-        setIsNudgeTableOpen(true);
         const rows: SLBMClientRow[] = response.data.data.map(
           (item: Omit<SLBMClientRow, "Id">, index: number) => ({
             ...item,
@@ -216,7 +220,7 @@ const SLBMStopwatch = ({ activeSubItem }: SLBMStopwatchProps) => {
         );
 
         setClientData(rows);
-      } else {
+        setIsNudgeTableOpen(true);
       }
     } catch (error) {
       console.error("GetNSESLBMClientDetails error:", error);
@@ -232,8 +236,9 @@ const SLBMStopwatch = ({ activeSubItem }: SLBMStopwatchProps) => {
           <NudgeTable
             isOpen={isNudgeTableOpen}
             onClose={() => setIsNudgeTableOpen(false)}
-            selectedReport="SLBM Client Detail Report"
+            selectedReport="SLBM Client Detail"
             singleData={clientData}
+            slbmSelectedRow={selectedSlbmRow}
             // selectedTab={selectedType}
           />
           <Row className="row-font">
@@ -271,9 +276,19 @@ const SLBMStopwatch = ({ activeSubItem }: SLBMStopwatchProps) => {
                             row
                             name="filter"
                             value={formik.values.filter}
-                            onChange={(event) =>
-                              formik.setFieldValue("filter", event.target.value)
-                            }
+                            onChange={async (event) => {
+                              const newFilter = event.target
+                                .value as SLBMFilter;
+
+                              // Avoid calling the API if the selected option hasn't changed.
+                              if (newFilter === formik.values.filter) return;
+
+                              // Update Formik's filter value first.
+                              await formik.setFieldValue("filter", newFilter);
+
+                              // Submit using the updated filter value.
+                              await formik.submitForm();
+                            }}
                             sx={{
                               alignItems: "center",
                               minHeight: 40,

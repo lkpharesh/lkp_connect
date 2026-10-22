@@ -921,8 +921,8 @@ const SideBar = () => {
     subItems: Record<string, JSX.Element | null>,
   ): JSX.Element | null => subItems[activeSubItem] || null;
 
-  const componentResolver = (menu_order: number, mn: string) => {
-    console.log("MenuOrder", menu_order, mn);
+  const componentResolver = (mo: number, mn: string) => {
+    console.log("MenuOrder", mo, mn);
     const map: Record<string, JSX.Element | null> = {
       "My Performance":
         user_type === "Employee"
@@ -1000,7 +1000,7 @@ const SideBar = () => {
     const active = menuItems.find((item) => item.mn === activeMenu);
     console.log("activeMenu", active);
 
-    return active ? componentResolver(active.menu_order, active.mn) : null;
+    return active ? componentResolver(active.mo, active.mn) : null;
   };
 
   const handleNotificationClick = () => {

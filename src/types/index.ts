@@ -18,7 +18,7 @@ export interface MenuItems {
   mn: string;
   menu_path: string | null;
   pmc: number;
-  menu_order: number;
+  mo: number;
   isParent: boolean;
   subItems?: MenuItems[]; // SubItems for child menus
 }

@@ -15913,7 +15913,7 @@ export const SlbmClientColumns: GridColDef[] = [
     field: "bestBidQty",
     headerName: "Best Bid Qty",
     flex: 1,
-    minWidth: 100,
+    minWidth: 80,
     headerClassName: "header-wrap-custom",
     headerAlign: "center",
     align: "right",
@@ -15927,7 +15927,7 @@ export const SlbmClientColumns: GridColDef[] = [
     field: "bestBidPrice",
     headerName: "Best Bid Price",
     flex: 1,
-    minWidth: 110,
+    minWidth: 80,
     headerClassName: "header-wrap-custom",
     headerAlign: "center",
     align: "right",
@@ -15944,7 +15944,7 @@ export const SlbmClientColumns: GridColDef[] = [
     field: "bestOffersQty",
     headerName: "Best Offers Qty",
     flex: 1,
-    minWidth: 110,
+    minWidth: 80,
     headerClassName: "header-wrap-custom",
     headerAlign: "center",
     align: "right",
@@ -15958,7 +15958,7 @@ export const SlbmClientColumns: GridColDef[] = [
     field: "bestOffersPrice",
     headerName: "Best Offers Price",
     flex: 1,
-    minWidth: 110,
+    minWidth: 80,
     headerClassName: "header-wrap-custom",
     headerAlign: "center",
     align: "right",
@@ -16059,7 +16059,7 @@ export const SlbmClientColumns: GridColDef[] = [
     field: "openPositions",
     headerName: "Open Positions",
     flex: 1.2,
-    minWidth: 80,
+    minWidth: 75,
     headerClassName: "header-wrap-custom",
     headerAlign: "center",
     align: "right",
@@ -16074,6 +16074,22 @@ export const SlbmClientColumns: GridColDef[] = [
     headerName: "Annualised Yield",
     flex: 1.2,
     minWidth: 90,
+    headerClassName: "header-wrap-custom",
+    headerAlign: "center",
+    align: "right",
+    disableColumnMenu: true,
+    renderCell: (params: any) =>
+      params.value != null && params.value !== ""
+        ? `${Number(params.value).toLocaleString("en-IN", {
+            maximumFractionDigits: 2,
+          })}%`
+        : "—",
+  },
+  {
+    field: "ann_Yield_BestBid",
+    headerName: "Annualised Yield (Best Bid)",
+    flex: 1.2,
+    minWidth: 100,
     headerClassName: "header-wrap-custom",
     headerAlign: "center",
     align: "right",
@@ -16127,7 +16143,7 @@ export const SlbmClientDetailsColumns: GridColDef[] = [
     flex: 1.5,
     minWidth: 220,
     headerAlign: "center",
-    align: "center",
+    align: "left",
     disableColumnMenu: true,
     renderCell: (params: any) => (params.value ? params.value : "—"),
   },
@@ -16152,48 +16168,8 @@ export const SlbmClientDetailsColumns: GridColDef[] = [
     renderCell: (params: any) => (params.value ? params.value : "—"),
   },
   {
-    field: "scrip",
-    headerName: "Scrip",
-    flex: 1,
-    minWidth: 100,
-    headerAlign: "center",
-    align: "center",
-    disableColumnMenu: true,
-    renderCell: (params: any) => (params.value ? params.value : "—"),
-  },
-  {
-    field: "series",
-    headerName: "Series",
-    flex: 1,
-    minWidth: 70,
-    headerAlign: "center",
-    align: "center",
-    disableColumnMenu: true,
-    renderCell: (params: any) => (params.value ? params.value : "—"),
-  },
-  {
-    field: "scripName",
-    headerName: "Scrip Name",
-    flex: 2,
-    minWidth: 200,
-    headerAlign: "center",
-    align: "center",
-    disableColumnMenu: true,
-    renderCell: (params: any) => (params.value ? params.value : "—"),
-  },
-  {
-    field: "reverseLegDate",
-    headerName: "Reverse Leg Date",
-    flex: 1.3,
-    minWidth: 140,
-    headerAlign: "center",
-    align: "center",
-    disableColumnMenu: true,
-    renderCell: (params: any) => (params.value ? params.value : "—"),
-  },
-  {
-    field: "bestBidQty",
-    headerName: "Best Bid Qty",
+    field: "availableQuantity",
+    headerName: "Available Quantity",
     flex: 1,
     minWidth: 100,
     headerAlign: "center",
@@ -16204,167 +16180,220 @@ export const SlbmClientDetailsColumns: GridColDef[] = [
         ? Number(params.value).toLocaleString("en-IN")
         : "—",
   },
-  {
-    field: "bestBidPrice",
-    headerName: "Best Bid Price",
-    flex: 1,
-    minWidth: 120,
-    headerAlign: "center",
-    align: "right",
-    disableColumnMenu: true,
-    renderCell: (params: any) =>
-      params.value != null && params.value !== ""
-        ? Number(params.value).toLocaleString("en-IN", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
-        : "—",
-  },
-  {
-    field: "bestOffersQty",
-    headerName: "Best Offers Qty",
-    flex: 1,
-    minWidth: 130,
-    headerAlign: "center",
-    align: "right",
-    disableColumnMenu: true,
-    renderCell: (params: any) =>
-      params.value != null && params.value !== ""
-        ? Number(params.value).toLocaleString("en-IN")
-        : "—",
-  },
-  {
-    field: "bestOffersPrice",
-    headerName: "Best Offers Price",
-    flex: 1,
-    minWidth: 140,
-    headerAlign: "center",
-    align: "right",
-    disableColumnMenu: true,
-    renderCell: (params: any) =>
-      params.value != null && params.value !== ""
-        ? Number(params.value).toLocaleString("en-IN", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
-        : "—",
-  },
-  {
-    field: "ltp",
-    headerName: "LTP",
-    flex: 1,
-    minWidth: 100,
-    headerAlign: "center",
-    align: "right",
-    disableColumnMenu: true,
-    renderCell: (params: any) =>
-      params.value != null && params.value !== ""
-        ? Number(params.value).toLocaleString("en-IN", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
-        : "—",
-  },
-  {
-    field: "underlyingLtp",
-    headerName: "Underlying LTP",
-    flex: 1.2,
-    minWidth: 140,
-    headerAlign: "center",
-    align: "right",
-    disableColumnMenu: true,
-    renderCell: (params: any) =>
-      params.value != null && params.value !== ""
-        ? Number(params.value).toLocaleString("en-IN", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
-        : "—",
-  },
-  {
-    field: "futuresLtp",
-    headerName: "Futures LTP",
-    flex: 1.2,
-    minWidth: 130,
-    headerAlign: "center",
-    align: "right",
-    disableColumnMenu: true,
-    renderCell: (params: any) =>
-      params.value != null && params.value !== ""
-        ? Number(params.value).toLocaleString("en-IN", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
-        : "—",
-  },
-  {
-    field: "spread",
-    headerName: "Spread",
-    flex: 1,
-    minWidth: 100,
-    headerAlign: "center",
-    align: "right",
-    disableColumnMenu: true,
-    renderCell: (params: any) =>
-      params.value != null && params.value !== ""
-        ? Number(params.value).toLocaleString("en-IN", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
-        : "—",
-  },
-  {
-    field: "spreadPercent",
-    headerName: "Spread %",
-    flex: 1,
-    minWidth: 110,
-    headerAlign: "center",
-    align: "right",
-    disableColumnMenu: true,
-    renderCell: (params: any) =>
-      params.value != null && params.value !== ""
-        ? `${Number(params.value).toLocaleString("en-IN", {
-            maximumFractionDigits: 2,
-          })}%`
-        : "—",
-  },
-  {
-    field: "openPositions",
-    headerName: "Open Positions",
-    flex: 1.2,
-    minWidth: 130,
-    headerAlign: "center",
-    align: "right",
-    disableColumnMenu: true,
-    renderCell: (params: any) =>
-      params.value != null && params.value !== ""
-        ? Number(params.value).toLocaleString("en-IN")
-        : "—",
-  },
-  {
-    field: "annualisedYield",
-    headerName: "Annualised Yield",
-    flex: 1.2,
-    minWidth: 140,
-    headerAlign: "center",
-    align: "right",
-    disableColumnMenu: true,
-    renderCell: (params: any) =>
-      params.value != null && params.value !== ""
-        ? `${Number(params.value).toLocaleString("en-IN", {
-            maximumFractionDigits: 2,
-          })}%`
-        : "—",
-  },
-  {
-    field: "daysToReverseLeg",
-    headerName: "Days to Reverse Leg",
-    flex: 1.3,
-    minWidth: 160,
-    headerAlign: "center",
-    align: "right",
-    disableColumnMenu: true,
-    renderCell: (params: any) =>
-      params.value != null && params.value !== "" ? params.value : "—",
-  },
+  // {
+  //   field: "scrip",
+  //   headerName: "Scrip",
+  //   flex: 1,
+  //   minWidth: 100,
+  //   headerAlign: "center",
+  //   align: "center",
+  //   disableColumnMenu: true,
+  //   renderCell: (params: any) => (params.value ? params.value : "—"),
+  // },
+  // {
+  //   field: "series",
+  //   headerName: "Series",
+  //   flex: 1,
+  //   minWidth: 70,
+  //   headerAlign: "center",
+  //   align: "center",
+  //   disableColumnMenu: true,
+  //   renderCell: (params: any) => (params.value ? params.value : "—"),
+  // },
+  // {
+  //   field: "scripName",
+  //   headerName: "Scrip Name",
+  //   flex: 2,
+  //   minWidth: 200,
+  //   headerAlign: "center",
+  //   align: "center",
+  //   disableColumnMenu: true,
+  //   renderCell: (params: any) => (params.value ? params.value : "—"),
+  // },
+  // {
+  //   field: "reverseLegDate",
+  //   headerName: "Reverse Leg Date",
+  //   flex: 1.3,
+  //   minWidth: 140,
+  //   headerAlign: "center",
+  //   align: "center",
+  //   disableColumnMenu: true,
+  //   renderCell: (params: any) => (params.value ? params.value : "—"),
+  // },
+  // {
+  //   field: "bestBidQty",
+  //   headerName: "Best Bid Qty",
+  //   flex: 1,
+  //   minWidth: 100,
+  //   headerAlign: "center",
+  //   align: "right",
+  //   disableColumnMenu: true,
+  //   renderCell: (params: any) =>
+  //     params.value != null && params.value !== ""
+  //       ? Number(params.value).toLocaleString("en-IN")
+  //       : "—",
+  // },
+  // {
+  //   field: "bestBidPrice",
+  //   headerName: "Best Bid Price",
+  //   flex: 1,
+  //   minWidth: 120,
+  //   headerAlign: "center",
+  //   align: "right",
+  //   disableColumnMenu: true,
+  //   renderCell: (params: any) =>
+  //     params.value != null && params.value !== ""
+  //       ? Number(params.value).toLocaleString("en-IN", {
+  //           minimumFractionDigits: 2,
+  //           maximumFractionDigits: 2,
+  //         })
+  //       : "—",
+  // },
+  // {
+  //   field: "bestOffersQty",
+  //   headerName: "Best Offers Qty",
+  //   flex: 1,
+  //   minWidth: 130,
+  //   headerAlign: "center",
+  //   align: "right",
+  //   disableColumnMenu: true,
+  //   renderCell: (params: any) =>
+  //     params.value != null && params.value !== ""
+  //       ? Number(params.value).toLocaleString("en-IN")
+  //       : "—",
+  // },
+  // {
+  //   field: "bestOffersPrice",
+  //   headerName: "Best Offers Price",
+  //   flex: 1,
+  //   minWidth: 140,
+  //   headerAlign: "center",
+  //   align: "right",
+  //   disableColumnMenu: true,
+  //   renderCell: (params: any) =>
+  //     params.value != null && params.value !== ""
+  //       ? Number(params.value).toLocaleString("en-IN", {
+  //           minimumFractionDigits: 2,
+  //           maximumFractionDigits: 2,
+  //         })
+  //       : "—",
+  // },
+  // {
+  //   field: "ltp",
+  //   headerName: "LTP",
+  //   flex: 1,
+  //   minWidth: 100,
+  //   headerAlign: "center",
+  //   align: "right",
+  //   disableColumnMenu: true,
+  //   renderCell: (params: any) =>
+  //     params.value != null && params.value !== ""
+  //       ? Number(params.value).toLocaleString("en-IN", {
+  //           minimumFractionDigits: 2,
+  //           maximumFractionDigits: 2,
+  //         })
+  //       : "—",
+  // },
+  // {
+  //   field: "underlyingLtp",
+  //   headerName: "Underlying LTP",
+  //   flex: 1.2,
+  //   minWidth: 140,
+  //   headerAlign: "center",
+  //   align: "right",
+  //   disableColumnMenu: true,
+  //   renderCell: (params: any) =>
+  //     params.value != null && params.value !== ""
+  //       ? Number(params.value).toLocaleString("en-IN", {
+  //           minimumFractionDigits: 2,
+  //           maximumFractionDigits: 2,
+  //         })
+  //       : "—",
+  // },
+  // {
+  //   field: "futuresLtp",
+  //   headerName: "Futures LTP",
+  //   flex: 1.2,
+  //   minWidth: 130,
+  //   headerAlign: "center",
+  //   align: "right",
+  //   disableColumnMenu: true,
+  //   renderCell: (params: any) =>
+  //     params.value != null && params.value !== ""
+  //       ? Number(params.value).toLocaleString("en-IN", {
+  //           minimumFractionDigits: 2,
+  //           maximumFractionDigits: 2,
+  //         })
+  //       : "—",
+  // },
+  // {
+  //   field: "spread",
+  //   headerName: "Spread",
+  //   flex: 1,
+  //   minWidth: 100,
+  //   headerAlign: "center",
+  //   align: "right",
+  //   disableColumnMenu: true,
+  //   renderCell: (params: any) =>
+  //     params.value != null && params.value !== ""
+  //       ? Number(params.value).toLocaleString("en-IN", {
+  //           minimumFractionDigits: 2,
+  //           maximumFractionDigits: 2,
+  //         })
+  //       : "—",
+  // },
+  // {
+  //   field: "spreadPercent",
+  //   headerName: "Spread %",
+  //   flex: 1,
+  //   minWidth: 110,
+  //   headerAlign: "center",
+  //   align: "right",
+  //   disableColumnMenu: true,
+  //   renderCell: (params: any) =>
+  //     params.value != null && params.value !== ""
+  //       ? `${Number(params.value).toLocaleString("en-IN", {
+  //           maximumFractionDigits: 2,
+  //         })}%`
+  //       : "—",
+  // },
+  // {
+  //   field: "openPositions",
+  //   headerName: "Open Positions",
+  //   flex: 1.2,
+  //   minWidth: 130,
+  //   headerAlign: "center",
+  //   align: "right",
+  //   disableColumnMenu: true,
+  //   renderCell: (params: any) =>
+  //     params.value != null && params.value !== ""
+  //       ? Number(params.value).toLocaleString("en-IN")
+  //       : "—",
+  // },
+  // {
+  //   field: "annualisedYield",
+  //   headerName: "Annualised Yield",
+  //   flex: 1.2,
+  //   minWidth: 140,
+  //   headerAlign: "center",
+  //   align: "right",
+  //   disableColumnMenu: true,
+  //   renderCell: (params: any) =>
+  //     params.value != null && params.value !== ""
+  //       ? `${Number(params.value).toLocaleString("en-IN", {
+  //           maximumFractionDigits: 2,
+  //         })}%`
+  //       : "—",
+  // },
+  // {
+  //   field: "daysToReverseLeg",
+  //   headerName: "Days to Reverse Leg",
+  //   flex: 1.3,
+  //   minWidth: 160,
+  //   headerAlign: "center",
+  //   align: "right",
+  //   disableColumnMenu: true,
+  //   renderCell: (params: any) =>
+  //     params.value != null && params.value !== "" ? params.value : "—",
+  // },
 ];

@@ -36,6 +36,7 @@ const NudgeTable = ({
   handleAction,
   handleDownload,
   selectedTab,
+  slbmSelectedRow,
 }: {
   isOpen: boolean;
   onClose: () => void;
@@ -49,6 +50,11 @@ const NudgeTable = ({
     action: "A" | "R";
   }) => void;
   handleDownload?: (row: any) => void;
+  slbmSelectedRow?: {
+    scrip: string;
+    scripName: string;
+    series: string;
+  } | null;
 }) => {
   // const theme = useTheme();
   // const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -149,7 +155,7 @@ const NudgeTable = ({
       case "More details about segment":
         return getBrokerageKycDetails(handleDownload ?? (() => {}));
 
-      case "SLBM Client Detail Report":
+      case "SLBM Client Detail":
         return SlbmClientDetailsColumns;
 
       case "Client List":
@@ -187,6 +193,7 @@ const NudgeTable = ({
         style={{
           padding: "8px 16px",
           marginBottom: "0px",
+          marginRight: selectedReport === "SLBM Client Detail" ? "20px" : "0px",
         }}
       >
         {selectedReport === "AMC Contest Report" ? (
@@ -263,13 +270,66 @@ const NudgeTable = ({
         ) : (
           <>
             <span style={{ marginLeft: "1.5rem" }}>{selectedReport}</span>
+            {selectedReport === "SLBM Client Detail" ? (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginLeft: "1.5rem",
+                  marginTop: "5px",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: "10px",
+                    fontWeight: 600,
+                    color: "#667085",
+                  }}
+                >
+                  <span style={{ fontWeight: 100 }}>Scrip:</span>{" "}
+                  {slbmSelectedRow?.scrip || "-"}
+                </div>
+
+                <div
+                  style={{
+                    fontSize: "10px",
+                    fontWeight: 400,
+                    color: "#667085",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "10px",
+                      fontWeight: 600,
+                      color: "#667085",
+                    }}
+                  >
+                    <span style={{ fontWeight: 100 }}>Scrip Name:</span>{" "}
+                    {slbmSelectedRow?.scripName || "-"}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "10px",
+                      fontWeight: 600,
+                      color: "#667085",
+                    }}
+                  >
+                    <span style={{ fontWeight: 100 }}>Series:</span>{" "}
+                    {slbmSelectedRow?.series || "-"}
+                  </div>
+                  {/* )} */}
+                </div>
+              </div>
+            ) : (
+              <span style={{ marginLeft: "1.5rem" }}>{selectedReport}</span>
+            )}
           </>
         )}
       </ModalHeader>
 
       <ModalBody
         style={{
-          paddingTop: "8px",
+          paddingTop: selectedReport === "SLBM Client Detail" ? "0px" : "8px",
         }}
       >
         <Card className="main-card">
