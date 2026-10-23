@@ -6093,69 +6093,69 @@ export const spipClientDetails: GridColDef[] = [
 ];
 
 export const getApproverOneDetails: GridColDef[] = [
-  {
-    field: "ds64",
-    headerName: "Deal Sheet",
-    headerClassName: "header-wrap-custom",
-    minWidth: 50,
-    align: "center",
-    headerAlign: "center",
-    disableColumnMenu: true,
-    sortable: false,
-    renderCell: (params) => {
-      const base64Data = params.value;
+  // {
+  //   field: "ds64",
+  //   headerName: "Deal Sheet",
+  //   headerClassName: "header-wrap-custom",
+  //   minWidth: 50,
+  //   align: "center",
+  //   headerAlign: "center",
+  //   disableColumnMenu: true,
+  //   sortable: false,
+  //   renderCell: (params) => {
+  //     const base64Data = params.value;
 
-      const today = new Date();
-      const dd = String(today.getDate()).padStart(2, "0");
-      const mm = String(today.getMonth() + 1).padStart(2, "0");
-      const yy = String(today.getFullYear()).slice(-2);
-      const filename = `Deal_Sheet_${dd}-${mm}-${yy}.pdf`;
+  //     const today = new Date();
+  //     const dd = String(today.getDate()).padStart(2, "0");
+  //     const mm = String(today.getMonth() + 1).padStart(2, "0");
+  //     const yy = String(today.getFullYear()).slice(-2);
+  //     const filename = `Deal_Sheet_${dd}-${mm}-${yy}.pdf`;
 
-      const handleDownload = () => {
-        if (!base64Data) return;
+  //     const handleDownload = () => {
+  //       if (!base64Data) return;
 
-        const binaryString = atob(base64Data);
-        const len = binaryString.length;
-        const bytes = new Uint8Array(len);
+  //       const binaryString = atob(base64Data);
+  //       const len = binaryString.length;
+  //       const bytes = new Uint8Array(len);
 
-        for (let i = 0; i < len; i++) {
-          bytes[i] = binaryString.charCodeAt(i);
-        }
+  //       for (let i = 0; i < len; i++) {
+  //         bytes[i] = binaryString.charCodeAt(i);
+  //       }
 
-        const decompressed = pako.ungzip(bytes);
-        // const blob = new Blob([decompressed], { type: "application/pdf" });
-        const blob = new Blob([new Uint8Array(decompressed)], {
-          type: "application/pdf",
-        }); // FIX: Ensure it's a Uint8Array
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = filename;
-        link.click();
+  //       const decompressed = pako.ungzip(bytes);
+  //       // const blob = new Blob([decompressed], { type: "application/pdf" });
+  //       const blob = new Blob([new Uint8Array(decompressed)], {
+  //         type: "application/pdf",
+  //       }); // FIX: Ensure it's a Uint8Array
+  //       const url = window.URL.createObjectURL(blob);
+  //       const link = document.createElement("a");
+  //       link.href = url;
+  //       link.download = filename;
+  //       link.click();
 
-        window.URL.revokeObjectURL(url);
-      };
+  //       window.URL.revokeObjectURL(url);
+  //     };
 
-      return (
-        <button
-          onClick={handleDownload}
-          style={{
-            color: "#11395C",
-            textDecoration: "underline",
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-          <DownloadForOfflineIcon />
-        </button>
-      );
-    },
-  },
+  //     return (
+  //       <button
+  //         onClick={handleDownload}
+  //         style={{
+  //           color: "#11395C",
+  //           textDecoration: "underline",
+  //           background: "none",
+  //           border: "none",
+  //           cursor: "pointer",
+  //         }}
+  //       >
+  //         <DownloadForOfflineIcon />
+  //       </button>
+  //     );
+  //   },
+  // },
 
   {
     field: "Action",
-    headerName: "Approve | Reject",
+    headerName: "Action",
     headerClassName: "header-wrap-custom",
     minWidth: 120,
     align: "center",

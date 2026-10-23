@@ -6,17 +6,20 @@ import { AppDispatch, RootState } from "../../../redux/store";
 import { apiServices } from "../../../services";
 import { hideLoader, showLoader } from "../../../redux/slices/loaderSlice";
 import ShowToast from "../../../utils/toastUtils";
-import { VendorProvider } from "./VendorContext";
+import UnlistedM from "../../../components/common/UnlistedM";
+// import { VendorProvider } from "./VendorContext";
 
 const index = ({ activeSubItem }: any) => {
   const [data, setData] = useState<any>();
   const [flag, setFlag] = useState<boolean>(false);
-  const [vendorList, setVendorList] = useState<any[]>([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedRow, setSelectedRow] = useState<any>(null);
+  // const [vendorList, setVendorList] = useState<any[]>([]);
 
   const dispatch = useDispatch<AppDispatch>();
 
   const { user_id } = useSelector(
-    (state: RootState) => state.UserLogin?.data?.data
+    (state: RootState) => state.UserLogin?.data?.data,
   );
 
   useEffect(() => {
@@ -25,11 +28,11 @@ const index = ({ activeSubItem }: any) => {
         userID: user_id,
       };
 
-      const vendorPayload = {
-        userID: user_id,
-        status: "",
-        remarks: "",
-      };
+      // const vendorPayload = {
+      //   userID: user_id,
+      //   status: "",
+      //   remarks: "",
+      // };
 
       try {
         dispatch(showLoader("Please wait, we are processing your request..."));
@@ -37,12 +40,11 @@ const index = ({ activeSubItem }: any) => {
         const response = await apiServices.Approver1ViewUnlisted(ViewPayload);
         console.log("Approver1ViewUnlistedResponse", response);
 
-        const vendorResponse = await apiServices.GetUnlistedVendorDropdown(
-          vendorPayload
-        );
+        // const vendorResponse =
+        //   await apiServices.GetUnlistedVendorDropdown(vendorPayload);
 
         const mainData = response?.data?.data || [];
-        const vendorData = vendorResponse?.data?.data || [];
+        // const vendorData = vendorResponse?.data?.data || [];
 
         // ✅ Add Id = index + 1 for mainData
         const updatedMainData = mainData.map((item: any, index: number) => ({
@@ -51,18 +53,18 @@ const index = ({ activeSubItem }: any) => {
         }));
 
         // ✅ Add Id = index + 1 for vendorData
-        const updatedVendorData = vendorData.map(
-          (item: any, index: number) => ({
-            ...item,
-            Id: index + 1,
-          })
-        );
+        // const updatedVendorData = vendorData.map(
+        //   (item: any, index: number) => ({
+        //     ...item,
+        //     Id: index + 1,
+        //   }),
+        // );
 
-        console.log("A1 Data", updatedMainData, updatedVendorData);
+        console.log("A1 Data", updatedMainData);
 
         // ⬅ Store updated data in state
         setData(updatedMainData);
-        setVendorList(updatedVendorData);
+        // setVendorList(updatedVendorData);
       } catch (error) {
         console.error("Error fetching compliance data:", error);
       } finally {
@@ -73,45 +75,46 @@ const index = ({ activeSubItem }: any) => {
     fetchApprover1();
   }, [dispatch, flag]);
 
-  const handleApproval = (
-    rid: number,
-    remark: string,
-    entryFlag: string,
-    vendorName?: number
-    // dealSheetB64?: string
-  ) => {
+  const handleApproval = ({ data, remarks, action, payRemarks = [] }: any) => {
+    if (!remarks?.trim()) {
+      ShowToast("error", "Remarks are compulsory");
+      return;
+    }
+
     const payload = {
-      rowID: rid,
+      rowID: data.rid,
       userID: user_id,
-      // userID: "EMP-5347",
-      status: entryFlag === "approve" ? "A" : "R",
-      remarks: remark,
-      vendorName: entryFlag === "approve" ? Number(vendorName) : null,
-      // dealSheetB64: entryFlag === "approve" ? dealSheetB64 : null,
+      status: action === "approve" ? "A" : "R",
+      remarks: remarks.trim(),
+      vendorName: 4,
+      payRemarks: [],
+      approverLevel: 1,
     };
-    dispatch(showLoader("Approving..."));
+
+    console.log("Approval payload", payload, payRemarks);
+
+    dispatch(showLoader("Please wait, we are processing your request..."));
 
     apiServices
       .ApproverActionUnlistedShares(payload)
       .then((response) => {
-        // setFlag(!flag);
         if (response?.status === 200) {
-          console.log("Resppponse111", response?.data);
-
-          setFlag(!flag);
+          setFlag((prev) => !prev);
+          setModalOpen(false);
+          setSelectedRow(null);
           ShowToast("success", response?.data?.message);
         } else {
-          console.log("Error during approval", response);
-          ShowToast("error", "Error approving item");
+          ShowToast("error", "Error processing approval");
         }
       })
       .catch((error) => {
-        ShowToast("info", error);
+        ShowToast("error", error?.message || "Something went wrong");
       })
       .finally(() => {
         dispatch(hideLoader());
       });
   };
+
   return (
     <div className="page-content page-view">
       <Container fluid>
@@ -132,16 +135,30 @@ const index = ({ activeSubItem }: any) => {
             <h4 className="card-title mb-0">Unlisted Shares Approval 1</h4>
           </CardHeader>
           <CardBody>
-            <VendorProvider value={vendorList}>
-              <DataTable
-                activeSubItem={activeSubItem}
-                T6Data={data}
-                handleApproval={handleApproval}
-              />
-            </VendorProvider>
+            {/* <VendorProvider value={vendorList}> */}
+            <DataTable
+              activeSubItem={activeSubItem}
+              T6Data={data}
+              // handleApproval={handleApproval}
+              onView={(row: any) => {
+                setSelectedRow(row);
+                setModalOpen(true);
+              }}
+            />
+            {/* </VendorProvider> */}
           </CardBody>
         </Card>
       </Container>
+      <UnlistedM
+        open={modalOpen}
+        onClose={() => {
+          setModalOpen(false);
+          setSelectedRow(null);
+        }}
+        data={selectedRow}
+        approverLevel="1"
+        handleAction={handleApproval}
+      />
     </div>
   );
 };

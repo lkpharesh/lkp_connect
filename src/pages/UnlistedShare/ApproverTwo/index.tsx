@@ -1,5 +1,6 @@
 import { Card, CardBody, CardHeader, Container } from "reactstrap";
 import DataTable from "../../../components/common/UserInfoTable";
+import UnlistedM from "../../../components/common/UnlistedM";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/store";
@@ -8,76 +9,75 @@ import { hideLoader, showLoader } from "../../../redux/slices/loaderSlice";
 import ShowToast from "../../../utils/toastUtils";
 
 const index = ({ activeSubItem }: any) => {
-  const [data, setData] = useState<any>();
-  const [flag, setFlag] = useState<boolean>(false);
+  const [data, setData] = useState<any[]>([]);
+  const [flag, setFlag] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedRow, setSelectedRow] = useState<any>(null);
 
   const dispatch = useDispatch<AppDispatch>();
 
   const { user_id } = useSelector(
-    (state: RootState) => state.UserLogin?.data?.data
+    (state: RootState) => state.UserLogin?.data?.data,
   );
 
   useEffect(() => {
-    const fetchApprover2 = () => {
-      const payload = {
-        userID: user_id,
-        // userID: "EMP-3699",
-      };
-      dispatch(showLoader("Please wait, we are processing your request..."));
+    dispatch(showLoader("Please wait, we are processing your request..."));
 
-      apiServices
-        .Approver2ViewUnlisted(payload)
-        .then((response) => {
-          const apiData = response?.data?.data ?? [];
+    apiServices
+      .Approver2ViewUnlisted({ userID: user_id })
+      .then((response) => {
+        const apiData = response?.data?.data ?? [];
 
-          const formattedData = apiData.map((item: any, index: number) => ({
+        setData(
+          apiData.map((item: any, index: number) => ({
             Id: index + 1,
             ...item,
-          }));
+          })),
+        );
+      })
+      .catch((error) => {
+        console.error("Error fetching approver 2 data:", error);
+        ShowToast("error", "Error fetching data");
+      })
+      .finally(() => dispatch(hideLoader()));
+  }, [dispatch, user_id, flag]);
 
-          console.log("A2 Data", formattedData);
-          setData(formattedData);
-        })
-        .catch((error) => {
-          console.error("Error fetching compliance data:", error);
-        })
-        .finally(() => {
-          dispatch(hideLoader());
-        });
-    };
+  const handleApproval = ({ data, remarks, action, payRemarks = [] }: any) => {
+    if (!remarks?.trim()) {
+      ShowToast("error", "Remarks are compulsory");
+      return;
+    }
 
-    fetchApprover2();
-  }, [dispatch, flag]);
-
-  const handleApproval = (rid: number, remark: string, entryFlag: string) => {
     const payload = {
-      rowID: rid,
+      rowID: data.rid,
       userID: user_id,
-      // userID: "EMP-3699",
-      status: entryFlag,
-      remarks: remark,
+      status: action === "approve" ? "A" : "R",
+      remarks: remarks.trim(),
+      vendorName: 0,
+      payRemarks,
+      approverLevel: 2,
     };
-    dispatch(showLoader("Approving..."));
+
+    dispatch(showLoader("Processing your request..."));
 
     apiServices
       .ApproverActionUnlistedShares(payload)
       .then((response) => {
-        // setFlag(!flag);
         if (response?.status === 200) {
-          setFlag(!flag);
+          setFlag((prev) => !prev);
+          setModalOpen(false);
+          setSelectedRow(null);
           ShowToast("success", response?.data?.message);
         } else {
-          console.log("Error during approval", response);
-          ShowToast("error", "Error approving item");
+          ShowToast("error", "Error processing approval");
         }
       })
       .catch((error) => {
-        ShowToast("info", error);
+        ShowToast("error", error?.response?.data?.message || "Request failed");
       })
-      .finally(() => {
-        dispatch(hideLoader());
-      });
+      .finally(() => dispatch(hideLoader()));
   };
+
   return (
     <div className="page-content page-view">
       <Container fluid>
@@ -97,15 +97,30 @@ const index = ({ activeSubItem }: any) => {
           >
             <h4 className="card-title mb-0">Unlisted Shares Approval 2</h4>
           </CardHeader>
+
           <CardBody>
             <DataTable
               activeSubItem={activeSubItem}
               T6Data={data}
-              handleApproval={handleApproval}
+              onView={(row: any) => {
+                setSelectedRow(row);
+                setModalOpen(true);
+              }}
             />
           </CardBody>
         </Card>
       </Container>
+
+      <UnlistedM
+        open={modalOpen}
+        onClose={() => {
+          setModalOpen(false);
+          setSelectedRow(null);
+        }}
+        data={selectedRow}
+        approverLevel="2"
+        handleAction={handleApproval}
+      />
     </div>
   );
 };

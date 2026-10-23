@@ -97,6 +97,7 @@ interface SelectedWidgetProps {
   handleDownloadExcel?: () => void;
   isCustomBtn?: any;
   handleContractMailClick?: () => void;
+  onView?: (row: any) => void;
   tabValue?: any;
   editRowAccess?: boolean;
   setRows?: any;
@@ -153,7 +154,7 @@ const DataTable = ({
   onViewAmcDetails,
   beneficiaryName,
   handleMTFRow,
-
+  onView,
   selectedTab,
   handleDownloadExcel,
   isCustomBtn,
@@ -231,8 +232,11 @@ const DataTable = ({
   const handleViewDetails = (row: any) => {
     // debugger;
     console.log("View Details clicked for:", row);
-    getUserBrokergageModificationDetails?.(row);
+    if (activeMenu === "Client Details") {
+      getUserBrokergageModificationDetails?.(row);
+    }
     setSelectedRow(row);
+    onView?.(row);
     // tog_center();
   };
 
@@ -1173,42 +1177,13 @@ const DataTable = ({
                 <div
                   style={{
                     display: "flex",
-                    flexDirection: "row",
                     justifyContent: "center",
+                    cursor: "pointer",
+                    color: "#0066b3",
                   }}
+                  onClick={() => handleViewDetails(params.row)}
                 >
-                  <div
-                    onClick={() => {
-                      setSelectedRow(params.row.rid);
-                      HandleApprovalModal("approve");
-                    }}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <Tooltip title="Approve" arrow placement="top">
-                      <CheckCircleIcon style={{ color: "green" }} />
-                    </Tooltip>
-                    {/* <span>Approve</span> */}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "20px",
-                      color: "gray",
-                      margin: "0 5px 0 5px",
-                    }}
-                  >
-                    |
-                  </div>
-                  <div
-                    onClick={() => {
-                      setSelectedRow(params.row.rid);
-                      HandleApprovalModal("reject");
-                    }}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <Tooltip title="Reject" arrow placement="top">
-                      <CancelIcon style={{ color: "red" }} />
-                    </Tooltip>
-                  </div>
+                  View
                 </div>
               );
             },
@@ -1227,42 +1202,13 @@ const DataTable = ({
                 <div
                   style={{
                     display: "flex",
-                    flexDirection: "row",
                     justifyContent: "center",
+                    cursor: "pointer",
+                    color: "#0066b3",
                   }}
+                  onClick={() => handleViewDetails(params.row)}
                 >
-                  <div
-                    onClick={() => {
-                      setSelectedRow(params.row.rid);
-                      HandleApprovalModal("approve");
-                    }}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <Tooltip title="Approve" arrow placement="top">
-                      <CheckCircleIcon style={{ color: "green" }} />
-                    </Tooltip>
-                    {/* <span>Approve</span> */}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "20px",
-                      color: "gray",
-                      margin: "0 5px 0 5px",
-                    }}
-                  >
-                    |
-                  </div>
-                  <div
-                    onClick={() => {
-                      setSelectedRow(params.row.rid);
-                      HandleApprovalModal("reject");
-                    }}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <Tooltip title="Reject" arrow placement="top">
-                      <CancelIcon style={{ color: "red" }} />
-                    </Tooltip>
-                  </div>
+                  View
                 </div>
               );
             },
