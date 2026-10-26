@@ -28,7 +28,7 @@ const PledgeReport = ({ activeSubItem }: any) => {
 
   const dispatch = useDispatch<AppDispatch>();
   const { user_id } = useSelector(
-    (state: RootState) => state.UserLogin?.data?.data
+    (state: RootState) => state.UserLogin?.data?.data,
   );
 
   const formik = useFormik({
@@ -176,7 +176,7 @@ const PledgeReport = ({ activeSubItem }: any) => {
       formik.setFieldError("startDate", "");
       formik.setFieldError("endDate", "");
       const formattedRange = `${moment(start).format("DD/MM/YYYY")} - ${moment(
-        end
+        end,
       ).format("DD/MM/YYYY")}`;
       setFormattedDateRange(formattedRange);
     } else {
@@ -252,8 +252,8 @@ const PledgeReport = ({ activeSubItem }: any) => {
                           {formik.touched.startDate && formik.errors.startDate
                             ? formik.errors.startDate
                             : formik.touched.endDate && formik.errors.endDate
-                            ? formik.errors.endDate
-                            : ""}
+                              ? formik.errors.endDate
+                              : ""}
                         </FormHelperText>
                       </FormControl>
                     </Col>

@@ -149,6 +149,7 @@ import ClientPosition from "../../pages/Reports/ClientPosition";
 import MTFYield from "../../pages/MTF Funding Yield";
 import ApproverFinal from "../../pages/UnlistedShare/FinalApprover";
 const drawerWidth = 262;
+import SLBMStopwatch from "../../pages/Reports/SLBMStopwatch";
 
 // Utility functions for Drawer
 const openedMixin = (theme: Theme, drawerWidth: any): CSSObject => ({
@@ -765,6 +766,7 @@ const SideBar = () => {
       <SLBMClientResponse activeSubItem={activeSubItem} />
     ),
     "SLBM Client Position": <ClientPosition activeSubItem={activeSubItem} />,
+    "SLBM Stockwatch": <SLBMStopwatch activeSubItem={activeSubItem} />,
   };
 
   // const referalSubItems: Record<string, JSX.Element> = {
@@ -923,8 +925,8 @@ const SideBar = () => {
     subItems: Record<string, JSX.Element | null>,
   ): JSX.Element | null => subItems[activeSubItem] || null;
 
-  const componentResolver = (menu_order: number, mn: string) => {
-    console.log("MenuOrder", menu_order, mn);
+  const componentResolver = (mo: number, mn: string) => {
+    console.log("MenuOrder", mo, mn);
     const map: Record<string, JSX.Element | null> = {
       "My Performance":
         user_type === "Employee"
@@ -1002,7 +1004,7 @@ const SideBar = () => {
     const active = menuItems.find((item) => item.mn === activeMenu);
     console.log("activeMenu", active);
 
-    return active ? componentResolver(active.menu_order, active.mn) : null;
+    return active ? componentResolver(active.mo, active.mn) : null;
   };
 
   const handleNotificationClick = () => {

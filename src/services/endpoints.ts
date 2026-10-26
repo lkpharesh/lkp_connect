@@ -396,6 +396,17 @@ export const endpoints = {
   SLBMPosition: "api/ShortAllocation/SLBMPosition",
   GetMTFYieldReport: "api/Account/GetMTFYieldReport",
   Approver3ViewUnlisted: "api/Account/Approver3ViewUnlisted",
+  GetSLBMDDL: "api/SLBM/GetSLBMDDL",
+  GetNSESLBMScripSummary: "api/SLBM/GetNSESLBMScripSummary",
+  GetNSESLBMClientDetails: "api/SLBM/GetNSESLBMClientDetails",
+  SendDealerT5AgeingMail: "api/RMS/SendDealerT5AgeingMail",
+  SendRMT5AgeingMail: "api/RMS/SendRMT5AgeingMail",
+  SendTLT5AgeingMail: "api/RMS/SendTLT5AgeingMail",
+  SendBMT5AgeingMail: "api/RMS/SendBMT5AgeingMail",
+  SendAHT5AgeingMail: "api/RMS/SendAHT5AgeingMail",
+  SendRHT5AgeingMail: "api/RMS/SendRHT5AgeingMail",
+  SendAPT5AgeingMail: "api/RMS/SendAPT5AgeingMail",
+  DownloadT5T6ODINFile: "api/RMS/DownloadT5T6ODINFile",
 };
 
 console.log("EndPOintLenghts", Object.keys(endpoints).length);

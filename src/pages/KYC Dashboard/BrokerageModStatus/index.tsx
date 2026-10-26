@@ -34,7 +34,7 @@ const BrokerageModificationStatus = ({ activeSubItem }: any) => {
   const dispatch = useDispatch<AppDispatch>();
   const { afterToday } = DateRangePicker;
   const { user_id } = useSelector(
-    (state: RootState) => state.UserLogin?.data?.data
+    (state: RootState) => state.UserLogin?.data?.data,
   );
   const [modificationStatus, setModificationStatus] = useState<any[]>([]);
   const [clientCode, setClientCode] = useState("");
@@ -128,7 +128,7 @@ const BrokerageModificationStatus = ({ activeSubItem }: any) => {
       };
       // 2. Remove 'rowId' and prepare data
       const cleanedData = (modificationStatus as Record<string, any>[]).map(
-        ({ rowId, ...rest }) => rest
+        ({ rowId, ...rest }) => rest,
       );
       // 3. Create worksheet
       const worksheet = XLSX.utils.json_to_sheet(cleanedData);
@@ -241,7 +241,7 @@ const BrokerageModificationStatus = ({ activeSubItem }: any) => {
                       selectedDateRange[0] && selectedDateRange[1]
                         ? ([selectedDateRange[0], selectedDateRange[1]] as [
                             Date,
-                            Date
+                            Date,
                           ])
                         : undefined
                     }
