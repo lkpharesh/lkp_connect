@@ -261,7 +261,13 @@ const SLBMStopwatch = ({ activeSubItem }: SLBMStopwatchProps) => {
                 </CardHeader>
                 <CardBody>
                   <form onSubmit={formik.handleSubmit}>
-                    <Row className="g-3 align-items-end">
+                    <Row
+                      className="g-2 align-items-end flex-nowrap"
+                      // style={{
+                      //   overflowX: "auto",
+                      //   paddingBottom: "4px",
+                      // }}
+                    >
                       {/* Radio buttons */}
                       <Col xs={12} md={4} lg="auto">
                         <FormControl
@@ -454,6 +460,7 @@ const SLBMStopwatch = ({ activeSubItem }: SLBMStopwatchProps) => {
                     activeSubItem={activeSubItem}
                     T6Data={summaryData}
                     handleClientCountClick={handleClientCountClick}
+                    disableRowSelectionOnClick={true}
                   />
                 </CardBody>
               </Card>

@@ -270,58 +270,35 @@ const NudgeTable = ({
         ) : (
           <>
             <span style={{ marginLeft: "1.5rem" }}>{selectedReport}</span>
-            {selectedReport === "SLBM Client Detail" ? (
+
+            {selectedReport === "SLBM Client Detail" && (
               <div
                 style={{
                   display: "flex",
-                  flexDirection: "column",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: ".5rem",
                   marginLeft: "1.5rem",
                   marginTop: "5px",
+                  flexWrap: "nowrap",
+                  whiteSpace: "nowrap",
                 }}
               >
-                <div
-                  style={{
-                    fontSize: "10px",
-                    fontWeight: 600,
-                    color: "#667085",
-                  }}
-                >
-                  <span style={{ fontWeight: 100 }}>Scrip:</span>{" "}
-                  {slbmSelectedRow?.scrip || "-"}
+                <div style={{ fontSize: "10px", color: "#667085" }}>
+                  <span style={{ fontWeight: 400 }}>Scrip: </span>
+                  <strong>{slbmSelectedRow?.scrip || "-"}</strong>
                 </div>
 
-                <div
-                  style={{
-                    fontSize: "10px",
-                    fontWeight: 400,
-                    color: "#667085",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: "10px",
-                      fontWeight: 600,
-                      color: "#667085",
-                    }}
-                  >
-                    <span style={{ fontWeight: 100 }}>Scrip Name:</span>{" "}
-                    {slbmSelectedRow?.scripName || "-"}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "10px",
-                      fontWeight: 600,
-                      color: "#667085",
-                    }}
-                  >
-                    <span style={{ fontWeight: 100 }}>Series:</span>{" "}
-                    {slbmSelectedRow?.series || "-"}
-                  </div>
-                  {/* )} */}
+                <div style={{ fontSize: "10px", color: "#667085" }}>
+                  <span style={{ fontWeight: 400 }}>Scrip Name: </span>
+                  <strong>{slbmSelectedRow?.scripName || "-"}</strong>
+                </div>
+
+                <div style={{ fontSize: "10px", color: "#667085" }}>
+                  <span style={{ fontWeight: 400 }}>Series: </span>
+                  <strong>{slbmSelectedRow?.series || "-"}</strong>
                 </div>
               </div>
-            ) : (
-              <span style={{ marginLeft: "1.5rem" }}>{selectedReport}</span>
             )}
           </>
         )}
@@ -384,6 +361,7 @@ const NudgeTable = ({
               columns={columns}
               pageSizeOptions={[0, 5]}
               rowHeight={30}
+              disableRowSelectionOnClick={true}
               localeText={{ noRowsLabel: "No Records!" }}
               sx={{
                 border: 0,
