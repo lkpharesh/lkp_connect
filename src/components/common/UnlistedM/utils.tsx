@@ -1,7 +1,8 @@
 import { Box, Grid, TextField, Typography } from "@mui/material";
+import ShowToast from "../../../utils/toastUtils";
 
-export const renderField = (label: string, value: any) => (
-  <Grid item xs={12} sm={6} key={label}>
+export const renderField = (label: string, value: any, columns = 6) => (
+  <Grid item xs={12} sm={columns} key={label}>
     <TextField
       fullWidth
       label={label}
@@ -82,3 +83,38 @@ export const renderPreviousRemarks = (label: string, value: any) => (
 
 export const formatValue = (value: any) =>
   value === null || value === undefined || value === "" ? "-" : value;
+
+export const validatePayRemarks = (payRemarks: any[] = []): boolean => {
+  const requiredFields = ["payDate", "payRefNo", "amount"];
+
+  const missingRemarks = payRemarks
+    .map((item: any, index: number) => {
+      const hasAnyValue = requiredFields.some(
+        (key) => String(item[key] ?? "").trim() !== "",
+      );
+
+      const missingFields = requiredFields.filter(
+        (key) => String(item[key] ?? "").trim() === "",
+      );
+
+      const isMandatoryRow = index === 0;
+
+      return {
+        missingFields,
+        hasAnyValue,
+        isMandatoryRow,
+      };
+    })
+    .filter(
+      (item) =>
+        (item.isMandatoryRow || item.hasAnyValue) &&
+        item.missingFields.length > 0,
+    );
+
+  if (missingRemarks.length > 0) {
+    ShowToast("error", "Payment Reference Required");
+    return false;
+  }
+
+  return true;
+};

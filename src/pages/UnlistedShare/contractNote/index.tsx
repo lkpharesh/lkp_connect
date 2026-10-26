@@ -49,6 +49,7 @@ interface UnlistedSharesMailViewItem {
 
 const ContractNote = ({ activeSubItem }: any) => {
   const [tabValue, setTabValue] = useState(0);
+  const [flag, setFlag] = useState(false);
   const [mailViewData, setMailViewData] = useState<
     UnlistedSharesMailViewItem[]
   >([]);
@@ -97,7 +98,7 @@ const ContractNote = ({ activeSubItem }: any) => {
 
   useEffect(() => {
     fetchMailViewData();
-  }, [user_id, tabValue]);
+  }, [user_id, tabValue, flag]);
 
   const handleContractMailClick = async () => {
     if (!mailViewData || mailViewData.length === 0) return;
@@ -117,9 +118,8 @@ const ContractNote = ({ activeSubItem }: any) => {
         try {
           //TAB 0 → Always call Contract Note API
           if (tabValue === 0) {
-            const response = await apiServices.UnlistedContractNoteMail(
-              payload
-            );
+            const response =
+              await apiServices.UnlistedContractNoteMail(payload);
 
             if (response?.status === 200) successCount++;
             else failCount++;
@@ -148,14 +148,15 @@ const ContractNote = ({ activeSubItem }: any) => {
           "success",
           tabValue === 0
             ? "Contract Note mail sent successfully"
-            : "Consent Form mail sent successfully"
+            : "Consent Form mail sent successfully",
         );
       } else if (successCount > 0 && failCount > 0) {
         ShowToast(
           "error",
-          `${failCount} mail(s) failed. ${successCount} sent successfully.`
+          `${failCount} mail(s) failed. ${successCount} sent successfully.`,
         );
       }
+      setFlag((prev) => !prev);
     } catch (error) {
       ShowToast("error", "Something went wrong while sending mails.");
     } finally {

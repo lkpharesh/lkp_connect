@@ -7,6 +7,7 @@ import { AppDispatch, RootState } from "../../../redux/store";
 import { apiServices } from "../../../services";
 import { hideLoader, showLoader } from "../../../redux/slices/loaderSlice";
 import ShowToast from "../../../utils/toastUtils";
+import { validatePayRemarks } from "../../../components/common/UnlistedM/utils";
 
 const index = ({ activeSubItem }: any) => {
   const [data, setData] = useState<any[]>([]);
@@ -42,21 +43,32 @@ const index = ({ activeSubItem }: any) => {
       .finally(() => dispatch(hideLoader()));
   }, [dispatch, user_id, flag]);
 
-  const handleApproval = ({ data, remarks, action, payRemarks = [] }: any) => {
+  const handleApproval = ({ data, remarks, action, payRemarks }: any) => {
+    console.log(data, "APP2", remarks, action, payRemarks);
+    if (!validatePayRemarks(payRemarks)) {
+      return;
+    }
+
     if (!remarks?.trim()) {
       ShowToast("error", "Remarks are compulsory");
       return;
     }
 
+    const filteredPayRemarks = (payRemarks ?? []).filter((item: any) =>
+      [item.payDate, item.payRefNo, item.amount].some(
+        (value) => String(value ?? "").trim() !== "",
+      ),
+    );
     const payload = {
       rowID: data.rid,
       userID: user_id,
       status: action === "approve" ? "A" : "R",
       remarks: remarks.trim(),
       vendorName: 0,
-      payRemarks,
+      payRemarks: filteredPayRemarks,
       approverLevel: 2,
     };
+    console.log(payload);
 
     dispatch(showLoader("Processing your request..."));
 

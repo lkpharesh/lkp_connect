@@ -502,6 +502,7 @@ export const newDomainEndpoints = [
   endpoints.UploadT5T6AgeingDebit,
   endpoints.SLBMPosition,
   endpoints.GetMTFYieldReport,
+  endpoints.Approver3ViewUnlisted,
 ];
 const uniqueEndpoints = new Set(newDomainEndpoints);
 console.log(

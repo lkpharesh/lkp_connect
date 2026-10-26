@@ -11,10 +11,11 @@ import {
   Divider,
   IconButton,
   CircularProgress,
+  Grid,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DownloadIcon from "@mui/icons-material/Download";
-import { renderPreviousRemarks, renderSection } from "./utils";
+import { renderField, renderPreviousRemarks, renderSection } from "./utils";
 
 const UnlistedM = ({
   open,
@@ -26,6 +27,11 @@ const UnlistedM = ({
 }: any) => {
   const [remarks, setRemarks] = useState("");
   const [downloading, setDownloading] = useState(false);
+  const [payRemarks, setPayRemarks] = useState([
+    { payDate: "", payRefNo: "", amount: "" },
+    { payDate: "", payRefNo: "", amount: "" },
+    { payDate: "", payRefNo: "", amount: "" },
+  ]);
 
   useEffect(() => {
     if (open) {
@@ -37,7 +43,7 @@ const UnlistedM = ({
 
   const handleActionClick = async (action: "approve" | "reject") => {
     try {
-      await handleAction?.({ data, remarks, action });
+      await handleAction?.({ data, remarks, action, payRemarks });
     } finally {
     }
   };
@@ -52,7 +58,16 @@ const UnlistedM = ({
       setDownloading(false);
     }
   };
+
   if (!data) return null;
+  const totalPayAmount = payRemarks.reduce(
+    (total, item) => total + (Number(item.amount) || 0),
+    0,
+  );
+
+  const requiredAmount = (Number(data?.crt) || 0) * (Number(data?.nsh) || 0);
+
+  const isPaymentAmountValid = totalPayAmount >= requiredAmount;
   return (
     <Dialog
       open={open}
@@ -162,12 +177,12 @@ const UnlistedM = ({
             {approverLevel === "final" &&
               renderPreviousRemarks(
                 "Approver 2 Remarks",
-                data.approver2Remarks,
+                data.PreApproverRemarks[1].remarks,
               )}
           </Box>
         )}
 
-        {(approverLevel === "2" || approverLevel === "final") && (
+        {approverLevel === "2" && (
           <Box
             sx={{
               border: "1px solid #e2e8f0",
@@ -177,16 +192,107 @@ const UnlistedM = ({
               backgroundColor: "#fff",
             }}
           >
-            <Typography fontSize={13} fontWeight={700} color="#163b5c" mb={1}>
+            <Typography fontSize={13} fontWeight={700} color="#163b5c" mb={1.5}>
               Approver Reference Details
             </Typography>
 
-            <Typography fontSize={12} color="text.secondary">
-              Reference details will appear here.
-            </Typography>
+            {payRemarks.map((item, index) => (
+              <Box key={index} mb={2}>
+                <Typography fontSize={12} fontWeight={600} mb={1}>
+                  Payment Reference {index + 1}
+                </Typography>
+
+                <Grid container spacing={1.5}>
+                  <Grid item xs={12} md={4}>
+                    <TextField
+                      fullWidth
+                      size="small"
+                      type="date"
+                      label="Payment Date"
+                      InputLabelProps={{ shrink: true }}
+                      value={item.payDate}
+                      onChange={(e) =>
+                        setPayRemarks((prev) =>
+                          prev.map((row, i) =>
+                            i === index
+                              ? { ...row, payDate: e.target.value }
+                              : row,
+                          ),
+                        )
+                      }
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} md={4}>
+                    <TextField
+                      fullWidth
+                      size="small"
+                      label="Reference Number"
+                      value={item.payRefNo}
+                      onChange={(e) =>
+                        setPayRemarks((prev) =>
+                          prev.map((row, i) =>
+                            i === index
+                              ? { ...row, payRefNo: e.target.value }
+                              : row,
+                          ),
+                        )
+                      }
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} md={4}>
+                    <TextField
+                      fullWidth
+                      size="small"
+                      type="number"
+                      label="Amount"
+                      value={item.amount}
+                      onChange={(e) =>
+                        setPayRemarks((prev) =>
+                          prev.map((row, i) =>
+                            i === index
+                              ? { ...row, amount: e.target.value }
+                              : row,
+                          ),
+                        )
+                      }
+                    />
+                  </Grid>
+                </Grid>
+              </Box>
+            ))}
           </Box>
         )}
+        {approverLevel === "final" && (
+          <Box
+            sx={{
+              border: "1px solid #e2e8f0",
+              borderRadius: 2,
+              p: 1.5,
+              mb: 1.5,
+              backgroundColor: "#fff",
+            }}
+          >
+            <Typography fontSize={13} fontWeight={700} color="#163b5c" mb={1.5}>
+              Previous Payment Reference Details
+            </Typography>
 
+            {(data.PayRemarks ?? []).map((item: any, index: number) => (
+              <Box key={index} mb={2}>
+                <Typography fontSize={12} fontWeight={600} mb={1}>
+                  Payment Reference {index + 1}
+                </Typography>
+
+                <Grid container spacing={1.5}>
+                  {renderField("Payment Date", item.payDate, 4)}
+                  {renderField("Reference Number", item.payRefNo, 4)}
+                  {renderField("Amount", item.amount, 4)}
+                </Grid>
+              </Box>
+            ))}
+          </Box>
+        )}
         <Box
           sx={{
             border: "1px solid #dbe5ef",
@@ -272,7 +378,9 @@ const UnlistedM = ({
           variant="contained"
           color="success"
           size="small"
-          disabled={downloading}
+          disabled={
+            downloading || (approverLevel === "2" && !isPaymentAmountValid)
+          }
           onClick={() => handleActionClick("approve")}
           sx={{ textTransform: "none", px: 2, boxShadow: "none" }}
         >
