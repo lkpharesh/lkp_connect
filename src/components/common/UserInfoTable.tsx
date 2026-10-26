@@ -3040,7 +3040,7 @@ const DataTable = ({
       return TableColumns.T6SellingDetailReportColumns.map((column) => ({
         ...column,
       }));
-    } else if (activeSubItem === "SLBM Client Response") {
+    } else if (activeSubItem === "SLBM Client Interest") {
       return TableColumns.SLBMClientResponseColumns.map((column) => ({
         ...column,
       }));

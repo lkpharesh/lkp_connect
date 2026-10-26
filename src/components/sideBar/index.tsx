@@ -762,7 +762,7 @@ const SideBar = () => {
     "LKP Bank Report": <BankReport activeSubItem={activeSubItem} />,
     "MTF Funding Yield": <MTFYield activeSubItem={activeSubItem} />,
     "Brokerage Report": <BrokerageData activeSubItem={activeSubItem} />,
-    "SLBM Client Response": (
+    "SLBM Client Interest": (
       <SLBMClientResponse activeSubItem={activeSubItem} />
     ),
     "SLBM Client Position": <ClientPosition activeSubItem={activeSubItem} />,
