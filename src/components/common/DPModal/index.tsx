@@ -173,8 +173,6 @@ const CustomModal = ({
       "KYC Approval",
       "RH Approval",
       "Pre Trade Approval",
-      "Unlisted Shares Approval 1",
-      "Unlisted Shares Approval 2",
       "Third Party Vendor Approval",
       "Third Party Invoice Verify",
     ].includes(activeSubItem) &&
@@ -231,8 +229,6 @@ const CustomModal = ({
       ...((activeSubItem === "Communication Retrival Checker" ||
         activeSubItem === "KYC Approval" ||
         activeSubItem === "RH Approval" ||
-        activeSubItem === "Unlisted Shares Approval 2" ||
-        activeSubItem === "Unlisted Shares Approval 1" ||
         activeSubItem === "Third Party Vendor Approval" ||
         activeSubItem === "Vendor Approval" ||
         activeSubItem === "Pre Trade Approval" ||
@@ -321,7 +317,6 @@ const CustomModal = ({
           "KYC Approval",
           "RH Approval",
           "Pre Trade Approval",
-          "Unlisted Shares Approval 2",
           "Third Party Vendor Approval",
           "Third Party Invoice Verify",
           "Vendor Approval",
@@ -633,8 +628,6 @@ const CustomModal = ({
       "KYC Approval",
       "RH Approval",
       "Pre Trade Approval",
-      "Unlisted Shares Approval 1",
-      "Unlisted Shares Approval 2",
       "Third Party Vendor Approval",
       "Vendor Approval",
       "Third Party Invoice Verify",

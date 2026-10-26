@@ -1217,6 +1217,31 @@ const DataTable = ({
         // Return unchanged column if not the 'status' or 'document' field
         return column;
       });
+    } else if (activeSubItem === "Unlisted Shares Final Approval") {
+      return TableColumns.getFinalApproverDetails.map((column) => {
+        if (column.field === "Action") {
+          return {
+            ...column,
+            renderCell: (params: any) => {
+              return (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    color: "#0066b3",
+                  }}
+                  onClick={() => handleViewDetails(params.row)}
+                >
+                  View
+                </div>
+              );
+            },
+          };
+        }
+        // Return unchanged column if not the 'status' or 'document' field
+        return column;
+      });
     } else if (
       activeSubItem === "Unlisted Shares Entry" ||
       activeSubItem === "Unlisted Shares Status"
@@ -3118,7 +3143,6 @@ const DataTable = ({
   } else if (
     activeSubItem === "Pre Trade Proof Upload" ||
     activeSubItem === "Pre Trade Report" ||
-    (activeSubItem === "Unlisted Shares Approval 1" && action === "approve") ||
     (activeSubItem === "Pre Trade Approval" && showDocument)
   ) {
     Msg = "";
@@ -3142,9 +3166,6 @@ const DataTable = ({
         Msg={Msg}
         activeSubItem={activeSubItem}
         isUploadMode={activeSubItem === "Pre Trade Proof Upload" ? true : false}
-        isDropUpload={
-          activeSubItem === "Unlisted Shares Approval 1" && action === "approve"
-        }
         handleFileUpload={(selectedRow, file, remark) => {
           console.log("Uploading file:", selectedRow, file);
           if (typeof onFileUpload === "function") {

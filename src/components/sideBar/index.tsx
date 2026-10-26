@@ -147,6 +147,7 @@ import T5T6DebitAgeing from "../../pages/RMS/T5T6DebitAgeing";
 
 import ClientPosition from "../../pages/Reports/ClientPosition";
 import MTFYield from "../../pages/MTF Funding Yield";
+import ApproverFinal from "../../pages/UnlistedShare/FinalApprover";
 const drawerWidth = 262;
 
 // Utility functions for Drawer
@@ -843,6 +844,9 @@ const SideBar = () => {
     ),
     "Unlisted Shares Approval 2": (
       <ViewApproverTwo activeSubItem={activeSubItem} />
+    ),
+    "Unlisted Shares Final Approval": (
+      <ApproverFinal activeSubItem={activeSubItem} />
     ),
     "Unlisted Shares Status": (
       <InsertUnlistedShares activeSubItem={activeSubItem} />
