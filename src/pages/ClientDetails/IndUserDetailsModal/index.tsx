@@ -669,7 +669,7 @@ const UserInfoModal = ({
 
                           {item.key === "slbm" &&
                           status === "Inactive" &&
-                          selectedWidget === "Inactive Clients" ? (
+                          selectedWidget === "Active Clients" ? (
                             <>
                               {" "}
                               <Tooltip title="Click to activate SLBM" arrow>
