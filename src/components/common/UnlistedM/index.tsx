@@ -123,7 +123,7 @@ const UnlistedM = ({
           ["Client Code", data.cc],
           ["Securities Name", data.nsec],
           ["ISIN", data.isin],
-          ["Vendor Name", data.VendorName],
+          ["Vendor Name", data.vnm],
           ["PAN Card", data.panno],
         ])}
 

@@ -234,9 +234,9 @@ const DataTable = ({
   const handleViewDetails = (row: any) => {
     // debugger;
     console.log("View Details clicked for:", row);
-    if (activeMenu === "Client Details") {
-      getUserBrokergageModificationDetails?.(row);
-    }
+    // if (activeMenu === "Client Details") {
+    getUserBrokergageModificationDetails?.(row);
+    // }
     setSelectedRow(row);
     onView?.(row);
     // tog_center();
