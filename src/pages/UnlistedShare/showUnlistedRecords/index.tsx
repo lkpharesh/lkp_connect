@@ -220,7 +220,7 @@ const InsertUnlistedShares = ({ activeSubItem }: any) => {
       beg,
       big,
       lcps, //is now LKP commission Per share
-      cn,
+      // cn,
       gst,
       nbg,
       nsh,
@@ -243,21 +243,23 @@ const InsertUnlistedShares = ({ activeSubItem }: any) => {
       isin,
       panno,
       vendorId,
-      // issueDate,
+      issueDate,
       clientCode,
+      clientName,
     } = data;
 
     const formattedDate = dayjs(tdt, "DD/MM/YYYY").format("YYYY-MM-DD");
     console.log(formattedDate, "formattedDate");
 
-    // const formattedIssueDate =
-    //   issueDate !== null && dayjs(issueDate, "DD/MM/YYYY").format("YYYY-MM-DD");
+    const formattedIssueDate =
+      issueDate !== null && dayjs(issueDate, "DD/MM/YYYY").format("YYYY-MM-DD");
 
-    const cleanClientName = cn && cn.replace(/\s\d+$/, "");
+    // const cleanClientName = cn && cn.replace(/\s\d+$/, "");
+
     let payload = {
       user_Id: user_id,
       transactionDate: formattedDate,
-      clientName: cleanClientName,
+      clientName: clientName ? clientName : "",
       securitiesName: nsec,
       noOfShares: unformatNumber(nsh),
       clientRate: unformatNumber(crt),
@@ -281,7 +283,7 @@ const InsertUnlistedShares = ({ activeSubItem }: any) => {
       paymentMode: paymentMode ? paymentMode : "",
       chequeRefNumber: referenceNumber ? referenceNumber : "",
       isin: isin ? isin : "",
-      issueDate: "2028-12-15",
+      issueDate: formattedIssueDate,
       clientCode: clientCode ? clientCode : "",
       panno: panno ? panno : "",
       vendorName: vendorId ? vendorId : "",

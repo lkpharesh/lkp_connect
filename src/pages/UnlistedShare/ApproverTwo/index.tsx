@@ -45,7 +45,7 @@ const index = ({ activeSubItem }: any) => {
 
   const handleApproval = ({ data, remarks, action, payRemarks }: any) => {
     console.log(data, "APP2", remarks, action, payRemarks);
-    if (!validatePayRemarks(payRemarks)) {
+    if (action === "approve" && !validatePayRemarks(payRemarks)) {
       return;
     }
 
