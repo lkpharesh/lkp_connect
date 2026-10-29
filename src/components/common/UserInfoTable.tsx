@@ -3032,6 +3032,10 @@ const DataTable = ({
       return TableColumns.BankAccReportColumns.map((column) => ({
         ...column,
       }));
+    } else if (activeSubItem === "CTCL JV Charges") {
+      return TableColumns.CTCLJVDataColumns.map((column) => ({
+        ...column,
+      }));
     } else if (activeSubItem === "MTF Funding Yield") {
       return TableColumns.MTFFundYieldColumns.map((column) => ({
         ...column,

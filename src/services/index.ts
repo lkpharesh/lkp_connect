@@ -1681,4 +1681,12 @@ export const apiServices = {
       responseType: "blob",
     });
   },
+  DownloadCTCLJVData: async (payload: any) => {
+    return await apiService("POST", endpoints.DownloadCTCLJVData, payload, {
+      responseType: "blob",
+    });
+  },
+  GetCTCLJVData: async (payload: any) => {
+    return await apiService("POST", endpoints.GetCTCLJVData, payload);
+  },
 };

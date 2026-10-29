@@ -428,6 +428,8 @@ export const newDomainEndpoints = [
   endpoints.UnlistedConsentFormMail,
   endpoints.UnlistedContractNoteMail,
   endpoints.SetUnlistedSharesDISNumber,
+  endpoints.GetCTCLJVData,
+  endpoints.DownloadCTCLJVData,
 
   //MTF Segment Activation
   endpoints.BeginMTFActivation,

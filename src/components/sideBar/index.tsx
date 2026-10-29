@@ -150,6 +150,7 @@ import MTFYield from "../../pages/MTF Funding Yield";
 import ApproverFinal from "../../pages/UnlistedShare/FinalApprover";
 const drawerWidth = 262;
 import SLBMStopwatch from "../../pages/Reports/SLBMStopwatch";
+import CTCLJVData from "../../pages/Reports/CTCL JV Charges";
 
 // Utility functions for Drawer
 const openedMixin = (theme: Theme, drawerWidth: any): CSSObject => ({
@@ -883,6 +884,7 @@ const SideBar = () => {
     "DP AutoPay Report": <AutoPayReport activeSubItem={activeSubItem} />,
     "LKP Bank Entry": <BankRecordEntry activeSubItem={activeSubItem} />,
     "LKP Bank Approval": <BankApproval activeSubItem={activeSubItem} />,
+    "CTCL JV Charges": <CTCLJVData activeSubItem={activeSubItem} />,
   };
 
   const q4SubItems: Record<string, JSX.Element> = {
