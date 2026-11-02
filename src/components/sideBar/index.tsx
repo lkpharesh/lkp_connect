@@ -151,6 +151,7 @@ import ApproverFinal from "../../pages/UnlistedShare/FinalApprover";
 const drawerWidth = 262;
 import SLBMStopwatch from "../../pages/Reports/SLBMStopwatch";
 import CTCLJVData from "../../pages/Reports/CTCL JV Charges";
+import BaskedUpload from "../../pages/RMS/MTFIntradayBaskedUpload";
 
 // Utility functions for Drawer
 const openedMixin = (theme: Theme, drawerWidth: any): CSSObject => ({
@@ -837,6 +838,7 @@ const SideBar = () => {
     "T5/T6 Debit Ageing File upload": (
       <T5T6DebitAgeing activeSubItem={activeSubItem} />
     ),
+    "MTF Intraday Basked Upload": <BaskedUpload />,
   };
   const tpdSubItems: Record<string, JSX.Element> = {
     "Unlisted Shares Entry": (

@@ -391,6 +391,7 @@ export const endpoints = {
   GetMTFShortfallSellQty: "api/RMS/GetMTFShortfallSellQty",
   GetVendorData: "api/Account/GetVendorData",
   ViewT6PostPreSellingData: "api/RMS/ViewT6PostPreSellingData",
+  UploadMTFCADG1File: "api/RMS/UploadMTFCADG1File",
   MarketingData: "api/MIS/MarketingData",
   UploadT5T6AgeingDebit: "api/RMS/UploadT5T6AgeingDebit",
   SLBMPosition: "api/ShortAllocation/SLBMPosition",

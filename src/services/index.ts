@@ -1689,4 +1689,7 @@ export const apiServices = {
   GetCTCLJVData: async (payload: any) => {
     return await apiService("POST", endpoints.GetCTCLJVData, payload);
   },
+  UploadMTFCADG1File: async (payload: any) => {
+    return await apiService("POST", endpoints.UploadMTFCADG1File, payload);
+  },
 };

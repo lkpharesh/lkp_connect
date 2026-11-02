@@ -87,6 +87,7 @@ export const multipartEndpoints = [
   endpoints.MTFShorfallUpload,
   endpoints.PhysicalClientFileUpload,
   endpoints.UploadT5T6AgeingDebit,
+  endpoints.UploadMTFCADG1File,
 ];
 
 export const mutualFundEndpoints = [
@@ -516,6 +517,7 @@ export const newDomainEndpoints = [
   endpoints.SendRHT5AgeingMail,
   endpoints.SendAPT5AgeingMail,
   endpoints.DownloadT5T6ODINFile,
+  endpoints.UploadMTFCADG1File,
 ];
 const uniqueEndpoints = new Set(newDomainEndpoints);
 console.log(
