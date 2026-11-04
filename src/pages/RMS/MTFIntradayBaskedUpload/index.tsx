@@ -29,7 +29,7 @@ const BaskedUpload = () => {
 
     try {
       const response = await apiServices.GetFileuploadDetails({
-        option: "MTFSHORTFALL",
+        option: "MTFCAD",
       });
 
       if (response?.status === 200 && response?.data?.isSuccess) {
